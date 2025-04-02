@@ -1,0 +1,11 @@
+.tile {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  box-sizing: border-box;
+}
+
+.tile.active {
+  background-color: #333;
+}
