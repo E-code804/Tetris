@@ -22,7 +22,7 @@ const Board = () => {
         row.map((cell, colIdx) => (
           <Tile
             key={`${rowIdx}-${colIdx}`}
-            isActive={cell !== 0}
+            // isActive={cell !== 0}
             color={cell !== 0 ? cell : undefined}
           />
         ))
