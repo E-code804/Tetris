@@ -76,15 +76,14 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
     case "HELD_PIECE": {
       // If a piece is already held, the current piece will be set to the held piece, next piece otherwise.
       const newPiece = state.heldPiece ? state.heldPiece : state.nextPiece;
+      // If help piece DNE, start the next piece at the top.
+      const newPosition = state.heldPiece
+        ? state.piece.position
+        : state.nextPiece.position;
 
       return {
         ...state,
-        piece: {
-          ...newPiece,
-          position: state.heldPiece
-            ? state.piece.position
-            : state.nextPiece.position,
-        }, // position will always be the current piece's position.
+        piece: { ...newPiece, position: newPosition },
         nextPiece: state.heldPiece ? state.nextPiece : getPiece(), // Only generate the nextPiece if there was not a held piece.
         heldPiece: state.piece,
       };
