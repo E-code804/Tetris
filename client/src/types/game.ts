@@ -19,4 +19,5 @@ export type GameAction =
   | { type: "ROTATE" }
   | { type: "UPDATE_ON_DOWN_PRESS" }
   | { type: "HELD_PIECE" }
+  | { type: "DROP_PIECE" }
   | { type: "RESET"; payload?: { board?: number[][]; score?: number } };

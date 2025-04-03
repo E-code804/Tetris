@@ -66,6 +66,12 @@
   box-shadow: 0 4px 6px rgba(255, 154, 158, 0.4);
 }
 
+.tile.ghost {
+  opacity: 0.3;
+  /* Optionally add a dashed border or other styling to differentiate */
+  border: 1px dashed #000;
+}
+
 /* Optional hover effect for an extra pop */
 .tile:hover {
   transform: scale(1.05);

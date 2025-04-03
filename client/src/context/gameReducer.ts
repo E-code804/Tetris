@@ -5,6 +5,7 @@ import {
   resetBoard,
 } from "../hooks/useBoard";
 import {
+  dropPiece,
   getPiece,
   moveDown,
   moveLeft,
@@ -27,6 +28,10 @@ export const initialState = {
 
 export const gameReducer = (state: GameState, action: GameAction): GameState => {
   switch (action.type) {
+    case "DROP_PIECE": {
+      const [newPiece, droppedSpaces] = dropPiece(state.piece, state.board);
+      return { ...state, piece: newPiece, score: state.score + droppedSpaces };
+    }
     case "MOVE_LEFT": {
       const newPiece = moveLeft(state.piece, state.board);
       return { ...state, piece: newPiece };

@@ -1,3 +1,4 @@
+import { detectCollision } from "../hooks/useBoard";
 import { Board } from "../types/board";
 import { Piece } from "../types/piece";
 
@@ -40,4 +41,29 @@ export const computeDisplayBoard = (board: Board, piece: Piece): Board => {
   });
 
   return newDisplayBoard;
+};
+
+export const computeGhostPiece = (board: Board, piece: Piece): Piece => {
+  let ghostPiece = { ...piece, position: { ...piece.position }, color: "ghost" };
+
+  // See how far down it goes
+  while (!detectCollision(board, ghostPiece)) {
+    ghostPiece = {
+      ...ghostPiece,
+      position: {
+        ...ghostPiece.position,
+        y: ghostPiece.position.y + 1,
+      },
+    };
+  }
+
+  ghostPiece = {
+    ...ghostPiece,
+    position: {
+      ...ghostPiece.position,
+      y: ghostPiece.position.y - 1,
+    },
+  };
+
+  return ghostPiece;
 };

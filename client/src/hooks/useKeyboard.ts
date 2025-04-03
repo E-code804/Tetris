@@ -8,6 +8,10 @@ export const useKeyboard = (
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       switch (e.key) {
+        case "ArrowUp":
+        case "w":
+          dispatch({ type: "DROP_PIECE" });
+          break;
         case "ArrowLeft":
         case "a":
           dispatch({ type: "MOVE_LEFT" });

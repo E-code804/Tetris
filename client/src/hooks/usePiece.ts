@@ -37,6 +37,34 @@ export const rotatePiece = (piece: Piece, board: Board): Piece => {
   return piece;
 };
 
+export const dropPiece = (piece: Piece, board: Board): [Piece, number] => {
+  let droppedPiece = { ...piece, position: { ...piece.position } };
+  let droppedSpaces = 0;
+
+  // See how far down it goes
+  while (!detectCollision(board, droppedPiece)) {
+    droppedSpaces++;
+    droppedPiece = {
+      ...droppedPiece,
+      position: {
+        ...droppedPiece.position,
+        y: droppedPiece.position.y + 1,
+      },
+    };
+  }
+
+  droppedPiece = {
+    ...droppedPiece,
+    position: {
+      ...droppedPiece.position,
+      y: droppedPiece.position.y - 1,
+    },
+  };
+  droppedSpaces--;
+
+  return [droppedPiece, droppedSpaces];
+};
+
 const attemptMove = (piece: Piece, board: Board, dx: number, dy: number): Piece => {
   const newPosition = {
     x: piece.position.x + dx,
