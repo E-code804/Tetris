@@ -1,0 +1,41 @@
+import { Board } from "../types/board";
+import { Piece } from "../types/piece";
+
+export const calcScore = (level: number, linesCleared: number) => {
+  const multiplier = level + 1;
+  console.log(multiplier);
+
+  switch (linesCleared) {
+    case 1:
+      return 40 * multiplier;
+    case 2:
+      return 100 * multiplier;
+    case 3:
+      return 300 * multiplier;
+    case 4:
+      return 1200 * multiplier;
+    default:
+      return 0;
+  }
+};
+
+export const computeDisplayBoard = (board: Board, piece: Piece) => {
+  const newDisplayBoard = board.map((row) => [...row]);
+  piece.shape.forEach((row, rIdx) => {
+    row.forEach((cell, cIdx) => {
+      if (cell !== 0) {
+        const y = piece.position.y + rIdx;
+        const x = piece.position.x + cIdx;
+        if (
+          y >= 0 &&
+          y < newDisplayBoard.length &&
+          x >= 0 &&
+          x < newDisplayBoard[0].length
+        ) {
+          newDisplayBoard[y][x] = cell;
+        }
+      }
+    });
+  });
+  return newDisplayBoard;
+};
