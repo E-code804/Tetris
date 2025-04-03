@@ -19,11 +19,7 @@ const Board = () => {
     <div className="board">
       {displayBoard.map((row, rowIdx) =>
         row.map((cell, colIdx) => (
-          <Tile
-            key={`${rowIdx}-${colIdx}`}
-            // isActive={cell !== 0}
-            color={cell !== 0 ? cell : undefined}
-          />
+          <Tile key={`${rowIdx}-${colIdx}`} color={cell !== 0 ? cell : ""} />
         ))
       )}
     </div>

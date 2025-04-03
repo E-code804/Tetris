@@ -12,7 +12,7 @@ const Piece: React.FC<PieceProps> = ({ name, piece }) => {
   const cols = piece?.shape[0].length;
 
   return (
-    <div className="next-piece">
+    <div className="piece">
       <div className="label">{name}</div>
       <div
         className="mini-grid"

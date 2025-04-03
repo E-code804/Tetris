@@ -1,5 +1,5 @@
 /* Next Piece */
-.next-piece {
+.piece {
   background-color: #111;
   border: 2px solid #444;
   border-radius: 8px;
@@ -11,7 +11,7 @@
   margin-bottom: 16px;
 }
 
-.next-piece .label {
+.piece .label {
   font-size: 14px;
   color: #888;
   margin-bottom: 8px;
