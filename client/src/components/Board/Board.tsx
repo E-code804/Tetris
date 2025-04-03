@@ -9,8 +9,8 @@ const Board = () => {
   const { state, dispatch } = useGameContext();
 
   // Derived displayBoard - can be memoized if nec.
-  const displayBoard = computeDisplayBoard(state.board, state.piece);
   const ghostPiece = computeGhostPiece(state.board, state.piece);
+  const displayBoard = computeDisplayBoard(state.board, state.piece, ghostPiece);
   console.log(ghostPiece.position);
 
   useGravity(dispatch, state.gameOver);

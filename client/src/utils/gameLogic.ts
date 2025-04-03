@@ -20,8 +20,29 @@ export const calcScore = (level: number, linesCleared: number) => {
   }
 };
 
-export const computeDisplayBoard = (board: Board, piece: Piece): Board => {
+export const computeDisplayBoard = (
+  board: Board,
+  piece: Piece,
+  ghostPiece: Piece
+): Board => {
   const newDisplayBoard = board.map((row) => [...row]);
+
+  ghostPiece.shape.forEach((row, rIdx) => {
+    row.forEach((cell, cIdx) => {
+      if (cell !== 0) {
+        const y = ghostPiece.position.y + rIdx;
+        const x = ghostPiece.position.x + cIdx;
+        if (
+          y >= 0 &&
+          y < newDisplayBoard.length &&
+          x >= 0 &&
+          x < newDisplayBoard[0].length
+        ) {
+          newDisplayBoard[y][x] = ghostPiece.color;
+        }
+      }
+    });
+  });
 
   piece.shape.forEach((row, rIdx) => {
     row.forEach((cell, cIdx) => {
