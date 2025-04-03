@@ -24,6 +24,9 @@ export const useKeyboard = (
         case "z":
           dispatch({ type: "ROTATE" });
           break;
+        case "x":
+          dispatch({ type: "HELD_PIECE" });
+          break;
         default:
           break;
       }

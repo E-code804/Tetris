@@ -5,12 +5,16 @@ import { detectCollision } from "./useBoard";
 
 export const getPiece = (): Piece => {
   const options = ["I", "O", "T", "S", "Z", "J", "L"];
+  const colors = ["red", "blue", "green", "yellow", "purple", "orange"];
+
   const randomType = options[Math.floor(Math.random() * options.length)];
+  const randomColor = colors[Math.floor(Math.random() * colors.length)];
   const newPiece: Piece = {
     shape: Pieces[randomType][0],
     position: { x: 0, y: 0 },
     rotationIndex: 0,
     type: randomType,
+    color: randomColor,
   };
 
   return newPiece;

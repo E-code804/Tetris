@@ -19,8 +19,9 @@ export const calcScore = (level: number, linesCleared: number) => {
   }
 };
 
-export const computeDisplayBoard = (board: Board, piece: Piece) => {
+export const computeDisplayBoard = (board: Board, piece: Piece): Board => {
   const newDisplayBoard = board.map((row) => [...row]);
+
   piece.shape.forEach((row, rIdx) => {
     row.forEach((cell, cIdx) => {
       if (cell !== 0) {
@@ -32,10 +33,11 @@ export const computeDisplayBoard = (board: Board, piece: Piece) => {
           x >= 0 &&
           x < newDisplayBoard[0].length
         ) {
-          newDisplayBoard[y][x] = cell;
+          newDisplayBoard[y][x] = piece.color;
         }
       }
     });
   });
+
   return newDisplayBoard;
 };

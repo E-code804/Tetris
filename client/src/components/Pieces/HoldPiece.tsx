@@ -2,14 +2,14 @@ import { useGameContext } from "../../hooks/useGameContext";
 import Tile from "../Tile/Tile";
 import "./nextpiece.css";
 
-const NextPiece = () => {
+const HoldPiece = () => {
   const { state } = useGameContext();
-  const rows = state.nextPiece.shape.length;
-  const cols = state.nextPiece.shape[0].length;
+  const rows = state.heldPiece?.shape.length;
+  const cols = state.heldPiece?.shape[0].length;
 
   return (
     <div className="next-piece">
-      <div className="label">Next Piece</div>
+      <div className="label">Held Piece</div>
       <div
         className="mini-grid"
         style={{
@@ -17,9 +17,14 @@ const NextPiece = () => {
           gridTemplateRows: `repeat(${rows}, 16px)`,
         }}
       >
-        {state.nextPiece.shape.map((row, rowIdx) =>
+        {state.heldPiece?.shape.map((row, rowIdx) =>
           row.map((cell, colIdx) => (
-            <Tile key={`${rowIdx}-${colIdx}`} isActive={cell !== 0} small />
+            <Tile
+              key={`${rowIdx}-${colIdx}`}
+              isActive={cell !== 0}
+              color={state.heldPiece?.color}
+              small
+            />
           ))
         )}
       </div>
@@ -27,4 +32,4 @@ const NextPiece = () => {
   );
 };
 
-export default NextPiece;
+export default HoldPiece;

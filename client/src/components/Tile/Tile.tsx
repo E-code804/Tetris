@@ -3,15 +3,14 @@ import "./tile.css";
 
 type TileProps = {
   isActive: boolean;
+  color?: string;
   small?: boolean;
 };
 
-const Tile: React.FC<TileProps> = ({ isActive, small }) => {
-  // const colors = ["red", "blue", "green"];
-  // const color = colors[Math.floor(Math.random() * colors.length)];
-  return (
-    <div className={`tile ${isActive ? "active" : ""} ${small ? "small" : ""}`} />
-  );
+const Tile: React.FC<TileProps> = ({ isActive, color, small }) => {
+  const tileClass = isActive && color ? `tile ${color}` : "tile";
+
+  return <div className={`${tileClass} ${small ? "small" : ""}`} />;
 };
 
 export default Tile;

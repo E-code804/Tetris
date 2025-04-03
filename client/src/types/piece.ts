@@ -5,4 +5,5 @@ export type Piece = {
   position: Position;
   rotationIndex: number;
   type: string;
+  color: string;
 };

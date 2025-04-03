@@ -1,5 +1,6 @@
 import Board from "../Board/Board";
-import NextPiece from "../NextPiece/NextPiece";
+import HoldPiece from "../Pieces/HoldPiece";
+import NextPiece from "../Pieces/NextPiece";
 import Stats from "../Stats/Stats";
 import "./singleplayergame.css";
 
@@ -12,6 +13,8 @@ const SinglePlayerGame = () => {
         <Stats />
 
         <NextPiece />
+
+        <HoldPiece />
       </div>
     </div>
   );

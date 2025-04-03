@@ -1,8 +1,7 @@
 import { createContext, ReactNode, useReducer } from "react";
-import { gameReducer, initialState } from "../gameReducer";
 import { GameAction, GameState } from "../types/game";
+import { gameReducer, initialState } from "./gameReducer";
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const GameContext = createContext<{
   state: GameState;
   dispatch: React.Dispatch<GameAction>;

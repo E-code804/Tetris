@@ -3,28 +3,29 @@ import {
   detectCollision,
   mergePieceToBoard,
   resetBoard,
-} from "./hooks/useBoard";
+} from "../hooks/useBoard";
 import {
   getPiece,
   moveDown,
   moveLeft,
   moveRight,
   rotatePiece,
-} from "./hooks/usePiece";
-import { GameAction, GameState } from "./types/game";
-import { calcScore } from "./utils/gameLogic";
+} from "../hooks/usePiece";
+import { GameAction, GameState } from "../types/game";
+import { calcScore } from "../utils/gameLogic";
 
 export const initialState = {
   board: resetBoard(),
   piece: getPiece(),
   nextPiece: getPiece(),
+  heldPiece: null,
   score: 0,
   level: 0,
   linesCleared: 0,
   gameOver: false,
 };
 
-export const gameReducer = (state: GameState, action: GameAction) => {
+export const gameReducer = (state: GameState, action: GameAction): GameState => {
   switch (action.type) {
     case "MOVE_LEFT": {
       const newPiece = moveLeft(state.piece, state.board);
@@ -49,6 +50,7 @@ export const gameReducer = (state: GameState, action: GameAction) => {
           board: clearedBoard,
           piece: state.nextPiece,
           nextPiece: getPiece(),
+          heldPiece: state.heldPiece,
           score: newScore,
           level: newLevel,
           linesCleared: updatedLinesCleared,
@@ -65,6 +67,17 @@ export const gameReducer = (state: GameState, action: GameAction) => {
     case "ROTATE": {
       const rotatedPiece = rotatePiece(state.piece, state.board);
       return { ...state, piece: rotatedPiece };
+    }
+    case "HELD_PIECE": {
+      // If a piece is already held, the current piece will be set to the held piece, next piece otherwise.
+      const newPiece = state.heldPiece ? state.heldPiece : state.nextPiece;
+
+      return {
+        ...state,
+        piece: { ...newPiece, position: state.piece.position }, // position will always be the current piece's position.
+        nextPiece: state.heldPiece ? state.nextPiece : getPiece(), // Only generate the nextPiece if there was not a held piece.
+        heldPiece: state.piece,
+      };
     }
     case "UPDATE_ON_DOWN_PRESS": {
       return { ...state, score: state.score + 1 };

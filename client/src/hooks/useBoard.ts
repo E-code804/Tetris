@@ -50,7 +50,7 @@ export const mergePieceToBoard = (board: Board, piece: Piece): Board => {
           boardX >= 0 &&
           boardX < newBoard[0].length
         ) {
-          newBoard[boardY][boardX] = shape[r][c];
+          newBoard[boardY][boardX] = piece.color;
         }
       }
     }
