@@ -48,8 +48,11 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
         const { board: clearedBoard, linesCleared } = clearRows(mergedBoard);
         const newScore = state.score + calcScore(state.level, linesCleared);
         const updatedLinesCleared = state.linesCleared + linesCleared;
+
         const newLevel =
-          updatedLinesCleared / 10 > state.level ? state.level + 1 : state.level;
+          Math.floor(updatedLinesCleared / 10) > state.level
+            ? state.level + 1
+            : state.level;
 
         const newState = {
           board: clearedBoard,

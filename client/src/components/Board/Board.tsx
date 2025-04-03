@@ -11,10 +11,9 @@ const Board = () => {
   // Derived displayBoard - can be memoized if nec.
   const ghostPiece = computeGhostPiece(state.board, state.piece);
   const displayBoard = computeDisplayBoard(state.board, state.piece, ghostPiece);
-  console.log(ghostPiece.position);
 
   useGravity(dispatch, state.gameOver);
-  useKeyboard(dispatch);
+  useKeyboard(dispatch, state.gameOver);
 
   return (
     <div className="board">

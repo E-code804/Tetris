@@ -22,7 +22,6 @@ export const getPiece = (): Piece => {
 
 export const rotatePiece = (piece: Piece, board: Board): Piece => {
   const nextRotationIndex = (piece.rotationIndex + 1) % Pieces[piece.type].length;
-  console.log(nextRotationIndex, Pieces[piece.type][nextRotationIndex]);
 
   const testPiece = {
     ...piece,

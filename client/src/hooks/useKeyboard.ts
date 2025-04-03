@@ -3,9 +3,12 @@ import { useEffect } from "react";
 import { GameAction } from "../types/game";
 
 export const useKeyboard = (
-  dispatch: React.ActionDispatch<[action: GameAction]>
+  dispatch: React.ActionDispatch<[action: GameAction]>,
+  gameOver: boolean
 ) => {
   useEffect(() => {
+    if (gameOver) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       switch (e.key) {
         case "ArrowUp":
@@ -38,5 +41,5 @@ export const useKeyboard = (
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [dispatch]);
+  }, [dispatch, gameOver]);
 };
