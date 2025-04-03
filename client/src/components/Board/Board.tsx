@@ -12,6 +12,7 @@ import {
   moveRight,
   rotatePiece,
 } from "../../hooks/usePiece";
+import { calcScore } from "../../utils/gameLogic";
 import Tile from "../Tile/Tile";
 import "./board.css";
 import NextPiece from "./NextPiece";
@@ -22,7 +23,7 @@ const Board = () => {
   const [piece, setPiece] = useState(() => getPiece());
   const [displayBoard, setDisplayBoard] = useState(() => resetBoard());
   const [score, setScore] = useState(0);
-  const [level, setLevel] = useState(1);
+  const [level, setLevel] = useState(0);
   const [linesCleared, setLinesCleared] = useState(0);
   const [nextPiece, setNextPiece] = useState(() => getPiece());
 
@@ -75,11 +76,13 @@ const Board = () => {
       const newPiece = moveDown(prevPiece, board);
 
       if (newPiece === prevPiece) {
+        console.log("Same piece");
+
         const mergedBoard = mergePieceToBoard(board, prevPiece);
         const { board: clearedBoard, linesCleared: newLinesCleared } =
           clearRows(mergedBoard);
 
-        setScore((prevScore) => prevScore + level * newLinesCleared);
+        setScore((prevScore) => prevScore + calcScore(level, newLinesCleared));
         setLinesCleared((prevLinesCleared) => {
           const updatedLines = prevLinesCleared + newLinesCleared;
 
@@ -118,7 +121,7 @@ const Board = () => {
     }, 500);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [level]);
 
   // User controls
   useEffect(() => {
@@ -145,7 +148,7 @@ const Board = () => {
           case "ArrowDown":
           case "s":
             updated = moveDown(prev, boardRef.current);
-            setScore((prevScore) => prevScore + 1);
+            setScore((prevScore) => prevScore + 0.5);
             break;
           case "z":
             if (now - lastRotateTimeRef.current > ROTATE_DELAY) {
@@ -187,6 +190,7 @@ const Board = () => {
 
       <div className="game-ui-elements">
         <Stats score={score} level={level} linesCleared={linesCleared} />
+
         <NextPiece piece={nextPiece} />
       </div>
     </div>

@@ -7,6 +7,8 @@ type TileProps = {
 };
 
 const Tile: React.FC<TileProps> = ({ isActive, small }) => {
+  // const colors = ["red", "blue", "green"];
+  // const color = colors[Math.floor(Math.random() * colors.length)];
   return (
     <div className={`tile ${isActive ? "active" : ""} ${small ? "small" : ""}`} />
   );
