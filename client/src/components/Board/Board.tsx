@@ -14,6 +14,8 @@ import {
 } from "../../hooks/usePiece";
 import Tile from "../Tile/Tile";
 import "./board.css";
+import NextPiece from "./NextPiece";
+import Stats from "./Stats";
 
 const Board = () => {
   const [board, setBoard] = useState(() => resetBoard());
@@ -22,12 +24,19 @@ const Board = () => {
   const [score, setScore] = useState(0);
   const [level, setLevel] = useState(1);
   const [linesCleared, setLinesCleared] = useState(0);
+  const [nextPiece, setNextPiece] = useState(() => getPiece());
 
   // Refs to track real-time values without causing re-renders
   const pieceRef = useRef(piece);
+  const nextPieceRef = useRef(nextPiece);
   const boardRef = useRef(board);
   const keyHoldRef = useRef<{ [key: string]: boolean }>({});
   const lastRotateTimeRef = useRef<number>(0);
+
+  useEffect(() => {
+    // Update the ref whenever nextPiece changes
+    nextPieceRef.current = nextPiece;
+  }, [nextPiece]);
 
   // Keep refs in sync with state
   useEffect(() => {
@@ -87,16 +96,21 @@ const Board = () => {
         setBoard(clearedBoard);
         boardRef.current = clearedBoard;
 
-        const nextPiece = getPiece();
+        // Use the ref to get the updated nextPiece
+        const upcoming = nextPieceRef.current;
 
-        if (detectCollision(clearedBoard, nextPiece)) {
+        if (detectCollision(clearedBoard, upcoming)) {
           console.log("Game Over");
           clearInterval(interval);
           return;
         }
 
-        setPiece(nextPiece);
-        pieceRef.current = nextPiece;
+        setPiece(upcoming);
+        pieceRef.current = upcoming;
+        const newNext = getPiece();
+        console.log(newNext);
+
+        setNextPiece(newNext);
       } else {
         setPiece(newPiece);
         pieceRef.current = newPiece;
@@ -163,27 +177,17 @@ const Board = () => {
 
   return (
     <div className="game">
-      <div className="stats">
-        <div className="stat-block">
-          <span className="label">Score</span>
-          <span className="value">{score}</span>
-        </div>
-        <div className="stat-block">
-          <span className="label">Level</span>
-          <span className="value">{level}</span>
-        </div>
-        <div className="stat-block">
-          <span className="label">Lines</span>
-          <span className="value">{linesCleared}</span>
-        </div>
-      </div>
-
       <div className="board">
         {displayBoard.map((row, rowIdx) =>
           row.map((cell, colIdx) => (
             <Tile key={`${rowIdx}-${colIdx}`} isActive={cell !== 0} />
           ))
         )}
+      </div>
+
+      <div className="game-ui-elements">
+        <Stats score={score} level={level} linesCleared={linesCleared} />
+        <NextPiece piece={nextPiece} />
       </div>
     </div>
   );
