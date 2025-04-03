@@ -79,7 +79,12 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
 
       return {
         ...state,
-        piece: { ...newPiece, position: state.piece.position }, // position will always be the current piece's position.
+        piece: {
+          ...newPiece,
+          position: state.heldPiece
+            ? state.piece.position
+            : state.nextPiece.position,
+        }, // position will always be the current piece's position.
         nextPiece: state.heldPiece ? state.nextPiece : getPiece(), // Only generate the nextPiece if there was not a held piece.
         heldPiece: state.piece,
       };
