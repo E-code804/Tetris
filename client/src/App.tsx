@@ -1,10 +1,13 @@
 import "./App.css";
-import Board from "./components/Board/Board";
+import SinglePlayerGame from "./components/SinglePlayerGame/SinglePlayerGame";
+import { GameContextProvider } from "./context/GameContext";
 
 function App() {
   return (
     <div className="main">
-      <Board />
+      <GameContextProvider>
+        <SinglePlayerGame />
+      </GameContextProvider>
     </div>
   );
 }

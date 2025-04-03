@@ -1,15 +1,11 @@
-import React from "react";
-// import { Pieces } from "../../utils/Pieces"; // adjust path as needed
-import { Piece } from "../../types/piece";
+import { useGameContext } from "../../hooks/useGameContext";
 import Tile from "../Tile/Tile";
+import "./nextpiece.css";
 
-type NextPieceProps = {
-  piece: Piece;
-};
-
-const NextPiece: React.FC<NextPieceProps> = ({ piece }) => {
-  const rows = piece.shape.length;
-  const cols = piece.shape[0].length;
+const NextPiece = () => {
+  const { state } = useGameContext();
+  const rows = state.nextPiece.shape.length;
+  const cols = state.nextPiece.shape[0].length;
 
   return (
     <div className="next-piece">
@@ -21,7 +17,7 @@ const NextPiece: React.FC<NextPieceProps> = ({ piece }) => {
           gridTemplateRows: `repeat(${rows}, 16px)`,
         }}
       >
-        {piece.shape.map((row, rowIdx) =>
+        {state.nextPiece.shape.map((row, rowIdx) =>
           row.map((cell, colIdx) => (
             <Tile key={`${rowIdx}-${colIdx}`} isActive={cell !== 0} small />
           ))

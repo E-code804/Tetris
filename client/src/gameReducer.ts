@@ -46,21 +46,18 @@ export const gameReducer = (state: GameState, action: GameAction) => {
           updatedLinesCleared / 10 > state.level ? state.level + 1 : state.level;
 
         const newState = {
-          ...state,
           board: clearedBoard,
-          score: newScore,
-          linesCleared: updatedLinesCleared,
-          level: newLevel,
           piece: state.nextPiece,
           nextPiece: getPiece(),
-          gameOver: false,
+          score: newScore,
+          level: newLevel,
+          linesCleared: updatedLinesCleared,
         };
 
-        if (detectCollision(clearedBoard, state.nextPiece)) {
-          return { ...newState, gameOver: true };
-        }
-
-        return { ...newState };
+        return {
+          ...newState,
+          gameOver: detectCollision(clearedBoard, state.nextPiece), // If a collision if detected here, gameOver
+        };
       }
 
       return { ...state, piece: newPiece };
@@ -73,15 +70,7 @@ export const gameReducer = (state: GameState, action: GameAction) => {
       return { ...state, score: state.score + 1 };
     }
     case "RESET": {
-      return {
-        board: resetBoard(),
-        piece: getPiece(),
-        nextPiece: getPiece(),
-        score: 0,
-        level: 0,
-        linesCleared: 0,
-        gameOver: false,
-      };
+      return initialState;
     }
     default:
       return state;

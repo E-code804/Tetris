@@ -34,7 +34,7 @@ export const detectCollision = (board: Board, piece: Piece): boolean => {
 
 // Call after a collision
 export const mergePieceToBoard = (board: Board, piece: Piece): Board => {
-  const newBoard = board.map((row) => [...row]); // Deep copy of board
+  const newBoard = board.map((row) => [...row]);
   const { shape, position } = piece;
 
   for (let r = 0; r < shape.length; r++) {
@@ -60,7 +60,6 @@ export const mergePieceToBoard = (board: Board, piece: Piece): Board => {
 };
 
 // Clears any full rows from the board
-// function clearRows(board: Board): { board: Board; rowsCleared: number };
 export const clearRows = (board: Board): { board: Board; linesCleared: number } => {
   const newBoard: Board = [];
   let linesCleared = 0;
